@@ -20,19 +20,21 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('auth/', include('apps.users.urls')),
-    path('auth/', include('django.contrib.auth.urls')),
-    path('', include('apps.recipes.urls')),
+    path("admin/", admin.site.urls),
+    path("auth/", include("apps.users.urls")),
+    path("auth/", include("django.contrib.auth.urls")),
+    path("", include("apps.recipes.urls")),
 ]
 
 if settings.DEBUG:
-    #import debug_toolbar
+    # import debug_toolbar
 
-
-    #urlpatterns += [
+    # urlpatterns += [
     #    path('__debug__/', include(debug_toolbar.urls)),
-    #]
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
-
+    # ]
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT
+    )

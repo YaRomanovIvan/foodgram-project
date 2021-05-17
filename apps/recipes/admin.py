@@ -1,10 +1,11 @@
 from django.contrib import admin
 from .models import Ingredient, Recipe, RecipeIngredient, Tag, RecipeTag
 
+
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
     extra = 1
-    raw_id_fields = ('ingredient',)
+    raw_id_fields = ("ingredient",)
 
 
 class RecipeTagInline(admin.TabularInline):
@@ -13,7 +14,10 @@ class RecipeTagInline(admin.TabularInline):
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    inlines = [RecipeIngredientInline, RecipeTagInline,]
+    inlines = [
+        RecipeIngredientInline,
+        RecipeTagInline,
+    ]
     prepopulated_fields = {"slug": ("title",)}
 
 
@@ -22,7 +26,7 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('title', 'unit')
+    list_display = ("title", "unit")
 
 
 admin.site.register(Ingredient, IngredientAdmin)

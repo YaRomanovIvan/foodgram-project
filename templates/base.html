@@ -1,25 +1,43 @@
-<!doctype html>
-<html lang="en">
+{% load static %}
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block page_title %}Заголовок страницы{% endblock %} | FoodGram</title>
-    {% block static_css %} {% endblock %}
-</head>
+        <title>{% block title %}Рецепты{% endblock title %} | Foodgram</title>
+        
+        {% block css %}<link rel="stylesheet" href="{% static 'pages/index.css' %}">{% endblock css %}
+    </head>
+    <body class="body">
 
-<body class="body">
-    {% include 'includes/navbar.html' %}
+        {% include 'include/nav.html' %}
 
-    <main class="main container">
-        {% block content %}{% endblock content %}
-    </main>
+        <main class="main container">
+            {% block header %}
+                <div class="main__header">
+                    <h1 class="main__title">{% block header_title %}Рецепты{% endblock header_title %}</h1>
+                    {% block tags %}
+                        {% include 'include/tags.html' %}
+                    {% endblock tags %}
+                </div>
+            {% endblock header %}
 
-    {% include 'includes/footer.html' %}
+            {% csrf_token %}
+            {% block content %}{% endblock content %}
+        </main>
 
-    {% block static_js %}{% endblock %}
-</body>
+        <footer class="footer">{% include 'include/footer.html' %}</footer>
 
+        {% block base_scripts %}
+            <script src="{% static 'js/config/config.js' %}"></script>
+            <script src="{% static 'js/api/Api.js' %}"></script>
+            <script src="{% static 'js/components/Purchases.js' %}"></script>
+            <script src="{% static 'js/components/MainCards.js' %}"></script>
+            <script src="{% static 'js/components/Header.js' %}"></script>
+        {% endblock base_scripts %}
+
+        {% block scripts %}
+        {% endblock scripts %}
+    </body>
 </html>

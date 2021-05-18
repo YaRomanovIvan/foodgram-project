@@ -1,15 +1,79 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-from django.http import JsonResponse
+import types
+
 from django.shortcuts import get_object_or_404
-from django.views import View
-from rest_framework.utils import json
-from apps.recipes.models import Ingredient, RecipeIngredient, Recipe
+from rest_framework import filters, mixins, viewsets
+from rest_framework.response import Response
+
+from . import serializers
+from apps.recipes.models import Favorite, Ingredient, Purchase
+from apps.users.models import Follow
+
+SUCCESS = types.MappingProxyType({'success': True})
+UNSUCCESS = types.MappingProxyType({'success': False})
 
 
-class IngredientApi(LoginRequiredMixin, View):
-    def get(self, request):
-        text = request.GET['query']
-        ingredients = list(Ingredient.objects.filter(
-            title__icontains=text).values('title', 'unit'))
-        return JsonResponse(ingredients, safe=False)
+class BaseInstanceView(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet,
+):
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(SUCCESS)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        is_deleted = instance.delete()
+        if is_deleted:
+            return Response(SUCCESS)
+        return Response(UNSUCCESS)
+
+
+class FavoriteApiView(BaseInstanceView):
+    queryset = Favorite.objects.all()
+    serializer_class = serializers.FavoriteSerializer
+
+    def get_object(self):
+        instance = get_object_or_404(
+            Favorite,
+            user=self.request.user,
+            recipe=self.kwargs['pk'],
+        )
+        return instance
+
+
+class FollowApiView(BaseInstanceView):
+    queryset = Follow.objects.all()
+    serializer_class = serializers.FollowSerializer
+
+    def get_object(self):
+        instance = get_object_or_404(
+            FollowApiView.queryset,
+            user=self.request.user,
+            author=self.kwargs['pk'],
+        )
+        self.check_object_permissions(self.request, instance)
+        return instance
+
+
+class PurchaseApiView(mixins.ListModelMixin, BaseInstanceView):
+    queryset = Purchase.objects.all()
+    serializer_class = serializers.PurchaseSerializer
+
+    def get_object(self):
+        instance = get_object_or_404(
+            PurchaseApiView.queryset,
+            user=self.request.user,
+            recipe=self.kwargs['pk'],
+        )
+        self.check_object_permissions(self.request, instance)
+        return instance
+
+
+class IngredientApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Ingredient.objects.all()
+    serializer_class = serializers.IngredientSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ('title',)

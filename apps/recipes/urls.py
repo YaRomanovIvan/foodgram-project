@@ -2,15 +2,33 @@ from django.urls import path
 
 from . import views
 
+app_name = 'recipes'
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path('', views.IndexView.as_view(), name='index'),
+    path('new/', views.RecipeCreateView.as_view(), name='new'),
+    path('follow/', views.FollowView.as_view(), name='follow'),
+    path('favorites/', views.FavoriteView.as_view(), name='favorites'),
+    path('purchases/', views.PurchaseView.as_view(), name='purchases'),
     path(
-        "recipe/<str:author>/<slug:slug>/",
-        views.recipe_view,
-        name="recipe_view",
+        'purchases/download/',
+        views.DownloadPurchasesListView.as_view(),
+        name='purchases_download',
     ),
-    path("create_recipe/", views.create_recipe, name="create_recipe"),
-    path('recipe/<str:author>/', views.author_recipe, name='author_recipe'),
-    path('follow/', views.profile_follow, name='follow'),
+    path('<str:username>/', views.ProfileView.as_view(), name='profile'),
+    path(
+        '<str:username>/<int:pk>/',
+        views.RecipeView.as_view(),
+        name='recipe',
+    ),
+    path(
+        '<str:username>/<int:pk>/edit/',
+        views.RecipeUpdateView.as_view(),
+        name='recipe_edit',
+    ),
+    path(
+        '<str:username>/<int:pk>/delete/',
+        views.RecipeDeleteView.as_view(),
+        name='recipe_delete',
+    )
 ]

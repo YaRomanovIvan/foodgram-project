@@ -1,3 +1,4 @@
+
 class Api {
   constructor(apiUrl) {
     this.apiUrl = apiUrl;
@@ -7,7 +8,6 @@ class Api {
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
-
       }
     })
       .then(e => {
@@ -23,7 +23,6 @@ class Api {
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
-
       },
       body: JSON.stringify({
         id: id
@@ -37,12 +36,11 @@ class Api {
       })
   }
   removePurchases(id) {
-    return fetch(`/api/v1/purchases/${id}`, {
+    return fetch(`/api/v1/purchases/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
-
       }
     })
       .then(e => {
@@ -58,7 +56,6 @@ class Api {
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
-
       },
       body: JSON.stringify({
         id: id
@@ -72,12 +69,11 @@ class Api {
       })
   }
   removeSubscriptions(id) {
-    return fetch(`/api/v1/subscriptions/${id}`, {
+    return fetch(`/api/v1/subscriptions/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
-
       }
     })
       .then(e => {
@@ -106,7 +102,7 @@ class Api {
       })
   }
   removeFavorites(id) {
-    return fetch(`/api/v1/favorites/${id}`, {
+    return fetch(`/api/v1/favorites/${id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -121,7 +117,7 @@ class Api {
       })
   }
   getIngredients(text) {
-    return fetch(`/api/v1/ingredients?query=${text}`, {
+    return fetch(`/api/v1/ingredients/?query=${text}/`, {
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value

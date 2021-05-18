@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    "apps.api",
     "apps.recipes",
     "apps.users",
     "django.contrib.admin",
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "sorl.thumbnail",
+    "rest_framework",
 ]
 
 

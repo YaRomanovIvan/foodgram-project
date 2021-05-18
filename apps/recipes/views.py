@@ -1,6 +1,7 @@
-from apps.recipes.models import Recipe, RecipeIngredient, Tag, User, Follow
+from apps.recipes.models import Recipe, RecipeIngredient, Tag, User, Follow, Ingredient, RecipeTag
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import RecipeForm
+from .utils import get_ingredients
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -24,18 +25,39 @@ def recipe_view(request, author, slug):
 
 
 def create_recipe(request):
+    user = get_object_or_404(User, username=request.user)
+    tags = Tag.objects.all()
     if request.method != "POST":
         return render(
-            request, "foodgram/create_recipe.html", {"form": RecipeForm()}
+            request, "foodgram/create_recipe.html", {"form": RecipeForm(), 'tags':tags}
         )
     form = RecipeForm(request.POST, files=request.FILES or None)
+    ingr = get_ingredients(request)
+    checkbox_tag = request.POST.getlist('checkbox')
+    print(ingr)
     if not form.is_valid():
         form = RecipeForm(request.POST, files=request.FILES or None)
         return render(request, "foodgram/create_recipe.html", {"form": form})
-    user = form.save(commit=False)
-    user.author = request.user
-    user.save()
-    return redirect("index")
+    recipe = form.save(commit=False)
+    recipe.author = user
+    recipe.save()
+    for pk in checkbox_tag:
+        tag = get_object_or_404(Tag, pk=pk)
+        recipetag = RecipeTag(
+            recipe=recipe,
+            tags=tag
+        )
+        recipetag.save()
+    for ingr_name, amount in ingr.items():
+        ingr_obj = get_object_or_404(Ingredient, title=ingr_name)
+        ingr_recipe = RecipeIngredient(
+            ingredient=ingr_obj,
+            recipe=recipe,
+            amount=amount,
+        )
+        ingr_recipe.save()
+    form.save_m2m()
+    return redirect('index')
 
 
 def author_recipe(request, author):

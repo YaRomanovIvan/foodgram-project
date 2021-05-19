@@ -16,113 +16,278 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Favorite',
+            name="Favorite",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Избранный',
-                'verbose_name_plural': 'Избранные',
+                "verbose_name": "Избранный",
+                "verbose_name_plural": "Избранные",
             },
         ),
         migrations.CreateModel(
-            name='Ingredient',
+            name="Ingredient",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=256, verbose_name='name')),
-                ('dimension', models.CharField(max_length=256, verbose_name='unit')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(max_length=256, verbose_name="name"),
+                ),
+                (
+                    "dimension",
+                    models.CharField(max_length=256, verbose_name="unit"),
+                ),
             ],
             options={
-                'verbose_name': 'Ингредиент',
-                'verbose_name_plural': 'Ингредиенты',
-                'ordering': ('title',),
+                "verbose_name": "Ингредиент",
+                "verbose_name_plural": "Ингредиенты",
+                "ordering": ("title",),
             },
         ),
         migrations.CreateModel(
-            name='Recipe',
+            name="Recipe",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=256, verbose_name='name')),
-                ('text', models.TextField(verbose_name='text')),
-                ('pub_date', models.DateTimeField(auto_now_add=True, verbose_name='pub date')),
-                ('cooking_time', models.PositiveIntegerField(validators=[apps.recipes.models.validate_zero], verbose_name='Cooking time')),
-                ('image', models.ImageField(upload_to='recipes/', verbose_name='image')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='recipes', to=settings.AUTH_USER_MODEL, verbose_name='author')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(max_length=256, verbose_name="name"),
+                ),
+                ("text", models.TextField(verbose_name="text")),
+                (
+                    "pub_date",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="pub date"
+                    ),
+                ),
+                (
+                    "cooking_time",
+                    models.PositiveIntegerField(
+                        validators=[apps.recipes.models.validate_zero],
+                        verbose_name="Cooking time",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        upload_to="recipes/", verbose_name="image"
+                    ),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="recipes",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="author",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Рецепт',
-                'verbose_name_plural': 'Рецепты',
-                'ordering': ('-pub_date',),
+                "verbose_name": "Рецепт",
+                "verbose_name_plural": "Рецепты",
+                "ordering": ("-pub_date",),
             },
         ),
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(choices=[('breakfast', 'Завтрак'), ('lunch', 'Обед'), ('dinner', 'Ужин')], default='lunch', max_length=10, unique=True, verbose_name='title')),
-                ('color', models.CharField(choices=[('green', 'Зеленый'), ('orange', 'Оранжевый'), ('purple', 'Фиолетовый')], default='green', max_length=10, unique=True, verbose_name='color')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        choices=[
+                            ("breakfast", "Завтрак"),
+                            ("lunch", "Обед"),
+                            ("dinner", "Ужин"),
+                        ],
+                        default="lunch",
+                        max_length=10,
+                        unique=True,
+                        verbose_name="title",
+                    ),
+                ),
+                (
+                    "color",
+                    models.CharField(
+                        choices=[
+                            ("green", "Зеленый"),
+                            ("orange", "Оранжевый"),
+                            ("purple", "Фиолетовый"),
+                        ],
+                        default="green",
+                        max_length=10,
+                        unique=True,
+                        verbose_name="color",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Тег',
-                'verbose_name_plural': 'Теги',
-                'ordering': ('pk',),
+                "verbose_name": "Тег",
+                "verbose_name_plural": "Теги",
+                "ordering": ("pk",),
             },
         ),
         migrations.CreateModel(
-            name='RecipeIngredient',
+            name="RecipeIngredient",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.PositiveIntegerField(verbose_name='value')),
-                ('ingredient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipes.ingredient', verbose_name='ingredient')),
-                ('recipe', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipes.recipe', verbose_name='recipe')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "quantity",
+                    models.PositiveIntegerField(verbose_name="value"),
+                ),
+                (
+                    "ingredient",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="recipes.ingredient",
+                        verbose_name="ingredient",
+                    ),
+                ),
+                (
+                    "recipe",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="recipes.recipe",
+                        verbose_name="recipe",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Ингредиенты рецепта',
-                'verbose_name_plural': 'Ингредиенты рецептов',
+                "verbose_name": "Ингредиенты рецепта",
+                "verbose_name_plural": "Ингредиенты рецептов",
             },
         ),
         migrations.AddField(
-            model_name='recipe',
-            name='ingredients',
-            field=models.ManyToManyField(through='recipes.RecipeIngredient', to='recipes.Ingredient', verbose_name='ingredients'),
+            model_name="recipe",
+            name="ingredients",
+            field=models.ManyToManyField(
+                through="recipes.RecipeIngredient",
+                to="recipes.Ingredient",
+                verbose_name="ingredients",
+            ),
         ),
         migrations.AddField(
-            model_name='recipe',
-            name='tags',
-            field=models.ManyToManyField(blank=True, related_name='recipes', to='recipes.Tag', verbose_name='tags'),
+            model_name="recipe",
+            name="tags",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="recipes",
+                to="recipes.Tag",
+                verbose_name="tags",
+            ),
         ),
         migrations.CreateModel(
-            name='Purchase',
+            name="Purchase",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('recipe', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='in_purchases', to='recipes.recipe', verbose_name='recipe')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='purchases', to=settings.AUTH_USER_MODEL, verbose_name='user')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "recipe",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="in_purchases",
+                        to="recipes.recipe",
+                        verbose_name="recipe",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="purchases",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="user",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Покупка',
-                'verbose_name_plural': 'Покупки',
+                "verbose_name": "Покупка",
+                "verbose_name_plural": "Покупки",
             },
         ),
         migrations.AddConstraint(
-            model_name='ingredient',
-            constraint=models.UniqueConstraint(fields=('title', 'dimension'), name='unique_composition_link'),
+            model_name="ingredient",
+            constraint=models.UniqueConstraint(
+                fields=("title", "dimension"), name="unique_composition_link"
+            ),
         ),
         migrations.AddField(
-            model_name='favorite',
-            name='recipe',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='in_favorites', to='recipes.recipe', verbose_name='recipe'),
+            model_name="favorite",
+            name="recipe",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="in_favorites",
+                to="recipes.recipe",
+                verbose_name="recipe",
+            ),
         ),
         migrations.AddField(
-            model_name='favorite',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='favorite_recipes', to=settings.AUTH_USER_MODEL, verbose_name='user'),
+            model_name="favorite",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="favorite_recipes",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="user",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='purchase',
-            constraint=models.UniqueConstraint(fields=('user', 'recipe'), name='unique_purchase'),
+            model_name="purchase",
+            constraint=models.UniqueConstraint(
+                fields=("user", "recipe"), name="unique_purchase"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='favorite',
-            constraint=models.UniqueConstraint(fields=('recipe', 'user'), name='unique_favorite_recipe'),
+            model_name="favorite",
+            constraint=models.UniqueConstraint(
+                fields=("recipe", "user"), name="unique_favorite_recipe"
+            ),
         ),
     ]

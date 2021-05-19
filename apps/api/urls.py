@@ -4,10 +4,10 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 router = DefaultRouter()
+router.register('ingredients', views.IngredientApiView)
 router.register('favorites', views.FavoriteApiView)
 router.register('subscriptions', views.FollowApiView)
 router.register('purchases', views.PurchaseApiView)
-router.register('ingredients', views.IngredientApiView)
 
 
 urlpatterns = [

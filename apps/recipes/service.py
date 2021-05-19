@@ -43,7 +43,7 @@ def generate_pdf(user):
 
     canvas.setFont(FONT, FONT_SIZE)
     canvas.drawString(X_COORDINATE, Y_COORDINATE_TITLE + SIZE_DOWN_TITLE,
-                      'Продукты которые понадобятся:')
+                      'Продукты:')
     y_coordinate = 130
     canvas.setFont(FONT, FONT_SIZE_TEXT)
 

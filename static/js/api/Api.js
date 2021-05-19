@@ -117,7 +117,7 @@ class Api {
       })
   }
   getIngredients(text) {
-    return fetch(`/api/v1/ingredients/?title=${text}`, {
+    return fetch(`/api/v1/ingredients/?search=${text}`, {
       headers: {
         'Content-Type': 'application/json'
       }

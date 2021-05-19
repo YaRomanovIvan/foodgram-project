@@ -44,6 +44,7 @@ class RecipeForm(forms.ModelForm):
                 self.data.getlist('valueIngredient'),
             ),
         )
+        print('Ингредиенты: ', ingredients)
         if not ingredients:
             raise forms.ValidationError('Отсутствуют ингредиенты')
 

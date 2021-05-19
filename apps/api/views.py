@@ -1,11 +1,10 @@
 import types
 
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins, viewsets
+from rest_framework import filters, mixins, viewsets
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
+
 from . import serializers
-from .filters import IngredientFilter
 from apps.recipes.models import Favorite, Ingredient, Purchase
 from apps.users.models import Follow
 
@@ -76,5 +75,5 @@ class PurchaseApiView(mixins.ListModelMixin, BaseInstanceView):
 class IngredientApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = IngredientFilter
+    filter_backends = [filters.SearchFilter]
+    search_fields = ('title',)

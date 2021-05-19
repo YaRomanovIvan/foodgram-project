@@ -1,17 +1,18 @@
-import io
+import io, os
 
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from reportlab.pdfgen.canvas import Canvas
-
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from .models import Ingredient, Recipe, RecipeIngredient
 
 X_COORDINATE = 50
 Y_COORDINATE_TITLE = 50
 FONT_SIZE = 18
 Y_COORDINATE_TEXT = 130
-SIZE_DOWN_TITLE = 25  # Number of spaces down
-SIZE_DOWN_TEXT = 44  # Number of spaces down
+SIZE_DOWN_TITLE = 25
+SIZE_DOWN_TEXT = 44
 FONT_SIZE_TEXT = 12
 FONT = 'GOST_Common'
 
@@ -29,6 +30,14 @@ def add_ingredients_to_recipe(recipe, ingredients):
             ) for ingredient in ingredients
         ],
     )
+
+
+pdfmetrics.registerFont(
+    TTFont(
+        'GOST_Common',
+        os.path.join('font/GOST_Common.ttf'),
+    )
+)
 
 
 def generate_pdf(user):

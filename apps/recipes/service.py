@@ -16,7 +16,6 @@ SIZE_DOWN_TEXT = 44
 FONT_SIZE_TEXT = 12
 FONT = "GOST_Common"
 
-
 def add_ingredients_to_recipe(recipe, ingredients):
     Recipe.ingredients.through.objects.bulk_create(
         [
@@ -32,14 +31,12 @@ def add_ingredients_to_recipe(recipe, ingredients):
         ],
     )
 
-
 pdfmetrics.registerFont(
     TTFont(
         "GOST_Common",
         os.path.join("font/GOST_Common.ttf"),
     )
 )
-
 
 def generate_pdf(user):
     buffer = io.BytesIO()
@@ -52,9 +49,7 @@ def generate_pdf(user):
     canvas.drawString(X_COORDINATE, Y_COORDINATE_TITLE, title)
 
     canvas.setFont(FONT, FONT_SIZE)
-    canvas.drawString(
-        X_COORDINATE, Y_COORDINATE_TITLE + SIZE_DOWN_TITLE, "Продукты:"
-    )
+    canvas.drawString(X_COORDINATE, Y_COORDINATE_TITLE + SIZE_DOWN_TITLE, "Продукты:")
     y_coordinate = 130
     canvas.setFont(FONT, FONT_SIZE_TEXT)
 

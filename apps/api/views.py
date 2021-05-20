@@ -4,10 +4,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework import filters, mixins, viewsets
 from rest_framework.response import Response
 
-from . import serializers
 from apps.recipes.models import Favorite, Ingredient, Purchase
 from apps.users.models import Follow
 
+from . import serializers
 
 SUCCESS = types.MappingProxyType({'success': True})
 UNSUCCESS = types.MappingProxyType({'success': False})

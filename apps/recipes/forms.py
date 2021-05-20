@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Recipe, Tag, Ingredient
+from .models import Ingredient, Recipe, Tag
 from .service import add_ingredients_to_recipe
 
 

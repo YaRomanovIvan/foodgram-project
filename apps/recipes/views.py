@@ -1,24 +1,22 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Exists, OuterRef
 from django.http import FileResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView, View)
 from django_filters.views import BaseFilterView
-from django.views.generic import (View, ListView, DetailView,
-                                  CreateView,
-                                  UpdateView,
-                                  DeleteView)
 
 from foodgram import settings
+
 from .filters import TaggedRecipeFilterSet
 from .forms import RecipeForm
+from .mixins import TagContextMixin
+from .models import Favorite, Purchase, Recipe
 from .permissions import AdminAuthorPermission
 from .service import generate_pdf
-from .mixins import TagContextMixin
-from .models import Recipe, Favorite, Purchase
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 
 User = get_user_model()
 

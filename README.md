@@ -21,3 +21,5 @@
 7. Загружаем данные:  
   ***docker-compose exec web python manage.py loaddata fixtures.json***  
 
+# Об авторе  
+Выпускник Яндекс.Практикум'а... и много интересного текста)

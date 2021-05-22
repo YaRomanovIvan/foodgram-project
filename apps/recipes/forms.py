@@ -37,6 +37,12 @@ class RecipeForm(forms.ModelForm):
             "cooking_time": forms.TextInput(),
         }
 
+        error_messages = {
+            'cooking_time': {
+                'min_value': '"Время приготовления" должно быть положительным',
+            }
+        }
+
     def clean_ingredients(self):
         ingredients = list(
             zip(

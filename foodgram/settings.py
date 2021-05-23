@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
     'localhost',
     'wwww.foodgram-food.ga',
     'foodgram-food.ga',
+    'web',
 ]
 
 APPEND_SLASH = False

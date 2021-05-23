@@ -3,8 +3,8 @@ ignore = W605, W503, W501
 exclude =
     venv/*,
     tests/*,
-    api/migrations/*,
-    users/migrations/*,
-    recipes/migrations/*,
+    apps/api/migrations/*,
+    apps/users/migrations/*,
+    apps/recipes/migrations/*,
     settings.py
 max-complexity = 10

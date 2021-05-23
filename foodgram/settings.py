@@ -21,7 +21,8 @@ ALLOWED_HOSTS = [
     'localhost',
     'wwww.foodgram-food.ga',
     'foodgram-food.ga',
-    ]
+]
+
 APPEND_SLASH = False
 
 INSTALLED_APPS = [

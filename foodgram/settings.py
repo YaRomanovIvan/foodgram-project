@@ -19,6 +19,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "84.252.134.143",
     'localhost',
+    '127.0.0.1',
     'wwww.foodgram-food.ga',
     'foodgram-food.ga',
     'web',
@@ -79,6 +80,13 @@ WSGI_APPLICATION = "foodgram.wsgi.application"
 
 DATABASES = {
     "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+"""
+DATABASES = {
+    "default": {
         "ENGINE": os.environ.get("DB_ENGINE"),
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("POSTGRES_USER"),
@@ -86,7 +94,7 @@ DATABASES = {
         "HOST": os.environ.get("DB_HOST"),
         "PORT": os.environ.get("DB_PORT"),
     }
-}
+}"""
 
 PAGINATE_BY = 6
 
@@ -135,12 +143,12 @@ ALLOWED_HOSTS += [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-EMAIL_PORT = 465
+EMAIL_HOST = 'smtp.gmail.com'#os.environ.get("EMAIL_HOST")
+EMAIL_HOST_USER = 'cross5820@gmail.com'#os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = 'Evropa2099.'#os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+#EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 SITE_ID = 1
